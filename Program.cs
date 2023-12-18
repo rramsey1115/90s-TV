@@ -23,8 +23,8 @@ List<Show> shows = DataLoader.GetShows();
 // ResultPrinter.Print("Good Crime Shows", GoodCrimeShows(shows));
 // ResultPrinter.Print("Long-running, Top-rated", FirstLongRunningTopRated(shows));
 // ResultPrinter.Print("Most Words in Title", WordieastName(shows));
-ResultPrinter.Print("All Names", AllNamesWithCommas(shows));
-// ResultPrinter.Print("All Names with And", AllNamesWithCommasPlsAnd(shows));
+// ResultPrinter.Print("All Names", AllNamesWithCommas(shows));
+ResultPrinter.Print("All Names with And", AllNamesWithCommasPlsAnd(shows));
 
 /**************************************************************************************************
     The Exercises
@@ -207,7 +207,7 @@ static string AllNamesWithCommas(List<Show> shows)
 // 23. Do the same as above, but put the word "and" between the second-to-last and last show name.
 static string AllNamesWithCommasPlsAnd(List<Show> shows)
 {
-    return string.Join(", ", shows.Select(s => s.Name));
+    return string.Join(", ", shows.Take(shows.Count -1).Select(s => s.Name)) + ", and " + shows.Last().Name;
 }
 
 /**************************************************************************************************
