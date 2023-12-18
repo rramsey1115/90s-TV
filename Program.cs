@@ -15,7 +15,7 @@ List<Show> shows = DataLoader.GetShows();
 // ResultPrinter.Print("Shows with Few Episodes", FewEpisodes(shows));
 // ResultPrinter.Print("Shows Sorted By Duration", ShowsByDuration(shows));
 // ResultPrinter.Print("Comedies Sorted By Rating", ComediesByRating(shows));
-ResultPrinter.Print("More Than One Genre, Sorted by Start", WithMultipleGenresByStartYear(shows));
+// ResultPrinter.Print("More Than One Genre, Sorted by Start", WithMultipleGenresByStartYear(shows));
 // ResultPrinter.Print("Most Episodes", MostEpisodes(shows));
 // ResultPrinter.Print("Ended after 2000", EndedFirstAfterTheMillennium(shows));
 // ResultPrinter.Print("Best Drama", BestDrama(shows));
@@ -23,7 +23,7 @@ ResultPrinter.Print("More Than One Genre, Sorted by Start", WithMultipleGenresBy
 // ResultPrinter.Print("Good Crime Shows", GoodCrimeShows(shows));
 // ResultPrinter.Print("Long-running, Top-rated", FirstLongRunningTopRated(shows));
 // ResultPrinter.Print("Most Words in Title", WordieastName(shows));
-// ResultPrinter.Print("All Names", AllNamesWithCommas(shows));
+ResultPrinter.Print("All Names", AllNamesWithCommas(shows));
 // ResultPrinter.Print("All Names with And", AllNamesWithCommasPlsAnd(shows));
 
 /**************************************************************************************************
@@ -135,66 +135,80 @@ static List<string> ComediesByRating(List<Show> shows)
 // 14. Return the shows with more than one genre ordered by their starting year.
 static List<Show> WithMultipleGenresByStartYear(List<Show> shows)
 {
-    throw new NotImplementedException();
+    return shows.Select(s => s)
+    .Where(s => s.Genres.Count > 1)
+    .OrderByDescending(s => s.StartYear)
+    .ToList();
 }
 
 // 15. Return the show with the most episodes.
 static Show MostEpisodes(List<Show> shows)
 {
-    throw new NotImplementedException();
+    return shows.Select(s => s)
+    .OrderByDescending(s => s.EpisodeCount)
+    .FirstOrDefault();
 }
 
 // 16. Order the shows by their ending year then return the first 
 //     show that ended on or after the year 2000.
 static Show EndedFirstAfterTheMillennium(List<Show> shows)
 {
-    throw new NotImplementedException();
+    return shows.OrderBy(s => s.EndYear)
+    .FirstOrDefault(s => s.EndYear >= 2000);
 }
 
 // 17. Order the shows by rating (highest first) 
 //     and return the first show with genre of drama.
 static Show BestDrama(List<Show> shows)
 {
-    throw new NotImplementedException();
+    return shows.OrderByDescending(s => s.ImdbRating)
+    .FirstOrDefault(s => s.Genres.Contains("Drama"));
 }
 
 // 18. Return all dramas except for the highest rated.
 static List<Show> AllButBestDrama(List<Show> shows)
 {
-    throw new NotImplementedException();
+    return shows.Select(s => s)
+    .Where(s => s.Genres.Contains("Drama"))
+    .OrderByDescending( s => s.ImdbRating)
+    .Skip(1)
+    .ToList();
 }
 
 // 19. Return the number of crime shows with an IMDB rating greater than 7.0.
 static int GoodCrimeShows(List<Show> shows)
 {
-    throw new NotImplementedException();
+    return shows.Where(s => s.ImdbRating > 7.0 && s.Genres.Contains("Crime")).Count();
 }
 
 // 20. Return the first show that ran for more than 10 years 
 //     with an IMDB rating of less than 8.0 ordered alphabetically.
 static Show FirstLongRunningTopRated(List<Show> shows)
 {
-    throw new NotImplementedException();
+    return shows.OrderByDescending(s => s.Name)
+    .Where(s => s.ImdbRating > 8.0 && s.EndYear - s.StartYear > 10)
+    .FirstOrDefault();
 }
 
 // 21. Return the show with the most words in the name.
 static Show WordieastName(List<Show> shows)
 {
-    throw new NotImplementedException();
+    return shows.Select(s => s)
+    .OrderByDescending(s => s.Name.Split(" ").Length)
+    .FirstOrDefault();
 }
 
 // 22. Return the names of all shows as a single string seperated by a comma and a space.
 static string AllNamesWithCommas(List<Show> shows)
 {
-    throw new NotImplementedException();
+    return string.Join(", ", shows.Select(s => s.Name));
 }
 
 // 23. Do the same as above, but put the word "and" between the second-to-last and last show name.
 static string AllNamesWithCommasPlsAnd(List<Show> shows)
 {
-    throw new NotImplementedException();
+    return string.Join(", ", shows.Select(s => s.Name));
 }
-
 
 /**************************************************************************************************
     CHALLENGES
